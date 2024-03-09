@@ -1,32 +1,49 @@
-# Web-Client.-Rest-API-Communication
-The project revolves around a client-side application written in C that interacts with a server using JSON parsing via the parson.h library. 
-This application serves as a library management system, allowing users to perform various commands through a command-line interface.
+# Web-Client-Rest-API-Communication
 
-For parsing JSON, I've chosen the parson.h library as it seemed easy to use in the code.
+This project focuses on a client-side application developed in C, designed to interact with a server via REST API. It utilizes JSON parsing through the `parson.h` library, facilitating a command-line interface for a library management system. The choice of `parson.h` for JSON parsing is attributed to its simplicity and ease of integration into the project code.
 
-The entire code is written in client.c and is divided into functions for each command
+## Key Components and Functionalities
 
--main: In main, there's a continuous while loop that takes commands from the keyboard and enters the necessary function for each. 
-       It stops when the 'exit' command is encountered.
-       
--register_command: We use the create_user_json_string function to create a new user and check if it already exists on the server. 
-                   We handle the server's response accordingly.
-                   
--login_command: We use the create_user_json_string function to create the user, verify if the entered data is correct, update the cookie, 
-                and store in a variable (successful_connex) that we are logged into the server.
-                
--logout: Using the successful_connex variable, we first check if we are connected. 
-         If we are, we send the information to the server and display an appropriate message.
-         
--enter_library: In this function, we enter the library. First, we check if we are logged in and if we are already in the library, using successful_connex and already_in. 
-                If it's our first time accessing the library, we parse the content of the token received from the server and remember that we've entered the library (already_in = 1).
-                
--get_books: We check if we are in the library; if yes, we display all the books received from the server.
+The application is encapsulated in `client.c`, segmented into distinct functions corresponding to user commands:
 
--get_book: It has the same functionality as get_books, but it displays only one book with its information based on the assigned ID.
-           We handle cases where the book ID doesn't exist or isn't a number, displaying the respective errors.
-           
- -add_book: We check if we are in the library. If yes, we create a new book with all the mentioned data as per the requirements and verify that the number of pages is valid. 
-            Then we send the new object to the server.
-            
--delete_book: Again, we check if we are in the library. If yes, we verify that the ID is in numeric form and finally, as with get_book, we check if that ID exists on the server.
+### Main Loop
+- **Functionality:** Continuously listens for commands inputted via the keyboard.
+- **Exit Condition:** The loop terminates upon receiving the 'exit' command.
+
+### Register Command
+- **Functionality:** Utilizes `create_user_json_string` to register a new user, verifying the user's existence on the server.
+- **Server Interaction:** Handles server responses to register requests.
+
+### Login Command
+- **Functionality:** Employs `create_user_json_string` for user authentication, updates the session cookie, and flags a successful connection (`successful_connex`).
+- **Authentication:** Confirms correctness of user input and updates login status.
+
+### Logout Command
+- **Pre-Check:** Verifies an existing connection via `successful_connex`.
+- **Server Notification:** Informs the server of the logout action and displays a confirmation message.
+
+### Enter Library
+- **Access Control:** Ensures user is logged in and not already in the library using `successful_connex` and `already_in`.
+- **Library Entry:** Parses server-provided token for library access, marking entry with `already_in = 1`.
+
+### Get Books
+- **Library Check:** Confirms user presence in the library.
+- **Display:** Shows all books retrieved from the server.
+
+### Get Book
+- **Functionality:** Similar to `get_books`, but focuses on displaying a single book's details based on its ID.
+- **Error Handling:** Manages non-existent or invalid book IDs with appropriate messages.
+
+### Add Book
+- **Library Check:** Verifies user's library access.
+- **Book Creation:** Assembles a new book object with required data, ensuring validity of the number of pages before submission to the server.
+
+### Delete Book
+- **Library Check:** Confirms user's presence in the library.
+- **ID Verification:** Checks for numeric ID format and validates the book's existence on the server prior to deletion.
+
+## Project Highlights
+
+- **JSON Parsing:** Efficiently managed through the `parson.h` library for seamless server communication.
+- **User-Friendly CLI:** Designed for ease of use with clear command functionalities.
+- **Robust Error Handling:** Ensures smooth user experience and operational integrity.
